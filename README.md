@@ -37,10 +37,6 @@ Khi bạn mở Facebook, YouTube, TikTok... Mai sẽ dịu dàng hỏi: *"Bạn 
 
 Viết xong lý do → được vào **5 phút**. Đủ để làm việc cần làm, không đủ để "lạc trôi".
 
-| Trước khi vào | Sau khi nhập lý do |
-|:---:|:---:|
-| <img width="400" alt="Intent Gate" src="https://github.com/user-attachments/assets/c89741d1-215d-417a-a023-edf3146d7ad8"> | Được vào 5 phút, rồi hỏi lại |
-
 ---
 
 ### 🎯 Deep Work — Tập trung sâu 40 phút
