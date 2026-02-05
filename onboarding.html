@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Chào mừng đến MaiZone 🌸</title>
+    <style>
+      :root {
+        --mai-pink: #ff8fab;
+        --mai-pink-weak: #ffb7c5;
+        --mai-text: #333333;
+        --mai-subtext: #666666;
+        --mai-bg: #ffffff;
+        --mai-card: #ffffff;
+        --mai-border: rgba(0, 0, 0, 0.08);
+        --mai-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--mai-bg);
+        color: var(--mai-text);
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
+          'Helvetica Neue', sans-serif;
+        line-height: 1.25;
+      }
+
+      .app {
+        width: min(820px, 92vw);
+        margin: 0 auto;
+        padding: 22px 0 28px;
+      }
+
+      .header {
+        display: flex;
+        gap: 14px;
+        align-items: flex-start;
+        padding: 14px 16px;
+        border: 1px solid var(--mai-border);
+        border-radius: 16px;
+        background: linear-gradient(180deg, rgba(255, 143, 171, 0.08), rgba(255, 143, 171, 0.02));
+        box-shadow: var(--mai-shadow);
+      }
+
+      .logo {
+        font-size: 30px;
+        line-height: 1;
+        transform: translateY(1px);
+      }
+
+      .header h1 {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--mai-text);
+      }
+
+      .header p {
+        margin: 6px 0 0;
+        font-size: 13px;
+        color: var(--mai-subtext);
+      }
+
+      .privacy-note {
+        margin-top: 8px;
+        font-size: 12px;
+        color: var(--mai-subtext);
+      }
+
+      .privacy-note b {
+        color: var(--mai-text);
+      }
+
+      .cards {
+        margin-top: 16px;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .card {
+        border: 1px solid var(--mai-border);
+        border-radius: 16px;
+        background: var(--mai-card);
+        box-shadow: var(--mai-shadow);
+        padding: 14px 16px;
+      }
+
+      .card-top {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .step {
+        width: 28px;
+        height: 28px;
+        border-radius: 999px;
+        display: grid;
+        place-items: center;
+        background: rgba(255, 143, 171, 0.14);
+        color: var(--mai-pink);
+        font-weight: 800;
+        font-size: 12px;
+        flex: 0 0 auto;
+      }
+
+      .card-title {
+        font-weight: 800;
+        font-size: 15px;
+        margin: 0;
+        flex: 1 1 auto;
+      }
+
+      .card-desc {
+        margin: 10px 0 0;
+        font-size: 13px;
+        color: var(--mai-subtext);
+      }
+
+      .row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-top: 12px;
+        flex-wrap: wrap;
+      }
+
+      .row-left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .status {
+        font-size: 12px;
+        color: var(--mai-subtext);
+      }
+
+      .status.ok {
+        color: #2e7d32;
+        font-weight: 600;
+      }
+
+      .status.warn {
+        color: #b71c1c;
+        font-weight: 600;
+      }
+
+      .button {
+        appearance: none;
+        border: none;
+        border-radius: 999px;
+        padding: 10px 14px;
+        background: var(--mai-pink);
+        color: white;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: transform 0.06s ease, background-color 0.2s ease;
+        white-space: nowrap;
+      }
+
+      .button:hover {
+        background: var(--mai-pink-weak);
+      }
+
+      .button:active {
+        transform: translateY(1px);
+      }
+
+      .button.secondary {
+        background: rgba(0, 0, 0, 0.06);
+        color: var(--mai-text);
+        font-weight: 700;
+      }
+
+      .button.secondary:hover {
+        background: rgba(0, 0, 0, 0.09);
+      }
+
+      .link {
+        appearance: none;
+        border: none;
+        background: transparent;
+        color: var(--mai-pink);
+        cursor: pointer;
+        padding: 0;
+        font-weight: 700;
+        font-size: 13px;
+        text-decoration: underline;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 3px;
+      }
+
+      .field {
+        width: min(520px, 100%);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .input {
+        flex: 1 1 260px;
+        min-width: 220px;
+        padding: 10px 12px;
+        border-radius: 12px;
+        border: 1px solid var(--mai-border);
+        font-size: 14px;
+        outline: none;
+      }
+
+      .input:focus {
+        border-color: rgba(255, 143, 171, 0.8);
+        box-shadow: 0 0 0 4px rgba(255, 143, 171, 0.14);
+      }
+
+      .hint {
+        margin-top: 8px;
+        font-size: 12px;
+        color: var(--mai-subtext);
+      }
+
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 44px;
+        height: 24px;
+        flex: 0 0 auto;
+      }
+
+      .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: 0.2s;
+        border-radius: 999px;
+      }
+
+      .slider:before {
+        position: absolute;
+        content: '';
+        height: 18px;
+        width: 18px;
+        left: 3px;
+        bottom: 3px;
+        background-color: white;
+        transition: 0.2s;
+        border-radius: 50%;
+      }
+
+      input:checked + .slider {
+        background-color: var(--mai-pink);
+      }
+
+      input:checked + .slider:before {
+        transform: translateX(20px);
+      }
+
+      .footer {
+        margin-top: 16px;
+        padding: 14px 16px;
+        border: 1px solid var(--mai-border);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .footer-left {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .footer-title {
+        font-weight: 800;
+        font-size: 13px;
+      }
+
+      .footer-sub {
+        font-size: 12px;
+        color: var(--mai-subtext);
+      }
+
+      .footer-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: rgba(255, 143, 171, 0.12);
+        color: var(--mai-text);
+        font-weight: 700;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="app">
+      <header class="header">
+        <div class="logo">🌸</div>
+        <div>
+          <h1>Chào mừng đến MaiZone</h1>
+          <p>Một hướng dẫn siêu nhẹ để bạn bắt đầu: hỏi lý do → 1 task → vào flow.</p>
+          <div class="privacy-note">
+            <span class="badge">🔒 Privacy-first</span>
+            <span>Mai <b>không</b> đọc password, <b>không</b> gửi dữ liệu ra ngoài.</span>
+          </div>
+        </div>
+      </header>
+
+      <section class="cards">
+        <!-- Card 1: Intent gate -->
+        <article class="card" id="card-intent">
+          <div class="card-top">
+            <div class="step">1</div>
+            <h2 class="card-title">Hỏi lý do khi mở web sao nhãng</h2>
+            <label class="switch" title="Bật/tắt hỏi lý do khi mở web sao nhãng">
+              <input type="checkbox" id="onb-intent-toggle" />
+              <span class="slider"></span>
+            </label>
+          </div>
+          <p class="card-desc">Mai sẽ hỏi lý do trước khi mở các trang dễ cuốn (YouTube, Facebook, TikTok...).</p>
+          <div class="row">
+            <div class="row-left">
+              <button class="link" id="onb-open-options">Chỉnh danh sách trang</button>
+              <span class="status" id="onb-intent-status"></span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 2: Deep Work -->
+        <article class="card" id="card-deepwork">
+          <div class="card-top">
+            <div class="step">2</div>
+            <h2 class="card-title">Deep Work 40 phút</h2>
+            <span class="badge" title="Trong flow, Mai sẽ giúp bạn tránh sao nhãng">🎯 1 việc</span>
+          </div>
+          <p class="card-desc">Nhập 1 việc bạn sẽ làm ngay bây giờ. Mai giữ nhịp 40’ để bạn làm tới nơi.</p>
+
+          <div class="row">
+            <div class="field">
+              <input class="input" id="onb-task-input" type="text" placeholder="Ví dụ: viết outline bài blog..." />
+              <button class="button" id="onb-start-deepwork">Bắt đầu</button>
+              <button class="button secondary" id="onb-end-deepwork" style="display: none">Kết thúc</button>
+            </div>
+            <span class="status" id="onb-deepwork-status"></span>
+          </div>
+          <div class="hint">Tip: bạn cũng có thể mở popup và bấm Enter để vào flow.</div>
+        </article>
+
+        <!-- Card 3: Mindfulness -->
+        <article class="card" id="card-mindfulness">
+          <div class="card-top">
+            <div class="step">3</div>
+            <h2 class="card-title">Nhắc thư giãn mỗi 15 phút</h2>
+            <label class="switch" title="Bật/tắt nhắc mindfulness">
+              <input type="checkbox" id="onb-mindfulness-toggle" />
+              <span class="slider"></span>
+            </label>
+          </div>
+          <p class="card-desc">
+            Cứ mỗi 15 phút, Mai sẽ nhắc bạn hít thở hoặc giãn cơ bằng một thông báo nhỏ. (Mai sẽ <b>không</b> nhắc khi bạn đang ở chế độ Deep Work.)
+          </p>
+          <div class="row">
+            <div class="row-left">
+              <button class="button secondary" id="onb-test-mindfulness">Thử ngay (Alt + A)</button>
+              <span class="status" id="onb-mindfulness-status"></span>
+            </div>
+          </div>
+          <div class="hint">Nếu bạn đang ở trang chrome:// hoặc tab đặc biệt, hãy mở 1 trang web (http/https) để test nhé.</div>
+        </article>
+      </section>
+
+      <footer class="footer">
+        <div class="footer-left">
+          <div class="footer-title">Xong rồi thì bắt đầu thôi 🌸</div>
+          <div class="footer-sub">Bạn có thể mở lại hướng dẫn bất cứ lúc nào trong popup (nút ❔).</div>
+        </div>
+        <div class="footer-actions">
+          <button class="button" id="onb-finish">Xong</button>
+        </div>
+      </footer>
+    </main>
+
+    <script src="onboarding.js" type="module"></script>
+  </body>
+</html>

@@ -1,0 +1,74 @@
+{
+  "manifest_version": 3,
+  "name": "MaiZone",
+  "version": "0.0.5",
+  "description": "MaiZone (🌸) - Mỗi lần làm một việc.",
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon.png",
+      "48": "icon.png",
+      "128": "icon.png"
+    }
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["exercise_gate.html", "exercise_hero.jpg", "icon_pushups.jpg", "icon_situps.jpg", "icon_squats.jpg"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "alarms",
+    "contextMenus",
+    "webNavigation",
+    "notifications",
+    "tabs",
+    "scripting",
+    "debugger",
+    "offscreen",
+    "clipboardWrite"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "commands": {
+    "test-mindfulness-toast": {
+      "suggested_key": {
+        "default": "Alt+A"
+      },
+      "description": "Thử mindfulness (toast)"
+    },
+    "test-exercise-reminder": {
+      "suggested_key": {
+        "default": "Alt+Shift+A"
+      },
+      "description": "Kích hoạt nhắc tập thể dục"
+    },
+    "clipmd-markdown": {
+      "suggested_key": {
+        "default": "Alt+Q"
+      },
+      "description": "Copy Markdown (chọn element)"
+    }
+  },
+  "omnibox": {
+    "keyword": "mai"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["actions_global.js", "content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

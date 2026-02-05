@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>MaiZone 🌸</title>
+  <!-- Phần style định nghĩa giao diện chung của extension popup -->
+  <style>
+    /* Thiết lập cơ bản cho toàn bộ popup */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      margin: 0;
+      padding: 12px;
+      width: 300px;
+      background-color: #FFFFFF;
+      color: #333333;
+    }
+
+    /* Header chứa logo và biểu tượng cài đặt */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between; /* Đặt nội dung vào 2 bên */
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    /* Phần trái của header chứa logo và tiêu đề */
+    .header-left {
+      display: flex;
+      align-items: center;
+    }
+    /* Phần phải của header chứa icon cài đặt */
+    .header-right {
+      display: flex;
+      align-items: center;
+    }
+    /* Định dạng cho icon cài đặt */
+    .settings-icon {
+      font-size: 20px;
+      cursor: pointer;
+      transition: transform 0.3s ease; /* Hiệu ứng chuyển động khi hover */
+    }
+    /* Hiệu ứng xoay khi hover vào icon cài đặt */
+    .settings-icon:hover {
+      transform: rotate(30deg);
+    }
+    .header h1 {
+      font-size: 18px;
+      margin: 0 0 0 8px;
+      color: #FF8FAB;
+    }
+    .logo {
+      font-size: 24px;
+    }
+    .status {
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 12px;
+    }
+    .status-text {
+      font-size: 14px;
+      color: #666;
+    }
+    .controls {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .switch-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .switch-label {
+      font-size: 14px;
+    }
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 40px;
+      height: 20px;
+    }
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 20px;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 2px;
+      bottom: 2px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+    input:checked + .slider {
+      background-color: #FF8FAB;
+    }
+    input:checked + .slider:before {
+      transform: translateX(20px);
+    }
+    .button {
+      background-color: #FF8FAB;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      width: 100%;
+      transition: background-color 0.3s;
+    }
+    .button:hover {
+      background-color: #FFB7C5;
+    }
+    #break-reminder-countdown {
+      color: #FF8FAB;
+      font-weight: bold;
+    }
+    /* Container cho phần nhập Task (f04) */
+    .task-input-container {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin: 10px 0;
+      padding: 10px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+    }
+    /* Input field để nhập task cần tập trung */
+    #task-input {
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="header-left">
+      <span class="logo">🌸</span>
+      <h1>do one thing at a time</h1>
+    </div>
+    <div class="header-right">
+      <span id="help-button" class="settings-icon" title="Hướng dẫn nhanh">❔</span>
+      <span id="settings-button" class="settings-icon">⚙️</span>
+    </div>
+  </div>
+
+  <div class="status">
+    <div class="status-text" id="status-text">Mai đang quan sát âm thầm...</div>
+  </div>
+
+  <div class="controls">
+    <div class="switch-container">
+      <span class="switch-label">Hạn chế các trang web gây sao nhãng</span>
+      <label class="switch">
+        <input type="checkbox" id="intent-gate-toggle" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="switch-container">
+      <span class="switch-label">Nhắc thư giãn mỗi 15 phút</span>
+      <label class="switch">
+        <input type="checkbox" id="mindfulness-reminder-toggle">
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="switch-container">
+      <span class="switch-label">Nhắc tập thể dục <span id="exercise-reminder-countdown" style="color:#FF8FAB;font-weight:bold">(--:--)</span></span>
+      <label class="switch">
+        <input type="checkbox" id="exercise-reminder-toggle" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="switch-container">
+      <span class="switch-label">Khung Deep Work <span id="break-reminder-countdown">(40:00)</span></span>
+      <label class="switch">
+        <input type="checkbox" id="break-reminder-toggle">
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <!-- Container cho tính năng f04 - Task input để tập trung vào 1 nhiệm vụ cụ thể -->
+    <div class="task-input-container">
+      <input type="text" id="task-input" placeholder="Nhập công việc cần tập trung..." />
+    </div>    
+  </div>
+
+  <script src="popup.js" type="module"></script>
+</body>
+</html>

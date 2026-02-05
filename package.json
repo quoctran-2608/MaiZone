@@ -1,0 +1,9 @@
+{
+  "name": "maizone_ext",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test"
+  }
+}
+

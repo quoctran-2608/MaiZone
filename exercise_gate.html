@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MaiZone · Tập thể dục</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      margin: 0;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .card {
+      width: min(560px, 100%);
+      background: linear-gradient(145deg, #1e2a4a 0%, #162040 100%);
+      border: 2px solid rgba(255, 170, 100, 0.3);
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 8px 32px rgba(255, 120, 50, 0.15), 0 0 60px rgba(255, 170, 100, 0.08);
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      margin: 0 0 8px 0;
+      font-size: 26px;
+      background: linear-gradient(90deg, #FFD93D, #FF6B6B, #FF8E53);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .row-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      font-size: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: bounce 1.5s ease-in-out infinite;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .row-icon:hover {
+      animation: none;
+      transform: scale(1.3) rotate(10deg);
+    }
+
+    .row:nth-child(2) .row-icon { animation-delay: 0.2s; }
+    .row:nth-child(3) .row-icon { animation-delay: 0.4s; }
+
+    p {
+      margin: 0 0 20px 0;
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.5;
+      font-size: 15px;
+    }
+
+    .exercises {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 48px 1fr 100px;
+      gap: 12px;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .label-row {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+
+    label {
+      color: rgba(255, 255, 255, 0.95);
+      font-weight: 500;
+      font-size: 15px;
+    }
+
+    .today-stat {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1a1a2e;
+      background: linear-gradient(90deg, #FFD93D, #FF8E53);
+      padding: 4px 12px;
+      border-radius: 20px;
+      box-shadow: 0 2px 8px rgba(255, 217, 61, 0.4);
+    }
+
+    input {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 2px solid rgba(255, 200, 100, 0.3);
+      background: rgba(0, 0, 0, 0.3);
+      color: #FFD93D;
+      font-size: 18px;
+      font-weight: 600;
+      text-align: center;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #FFD93D;
+      box-shadow: 0 0 12px rgba(255, 217, 61, 0.3);
+    }
+
+    .actions {
+      margin-top: 20px;
+    }
+
+    button {
+      width: 100%;
+      border: 0;
+      border-radius: 14px;
+      padding: 16px 20px;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      background: linear-gradient(90deg, #FF6B6B, #FF8E53, #FFD93D);
+      color: #1a1a2e;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 4px 20px rgba(255, 120, 50, 0.4);
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 28px rgba(255, 120, 50, 0.5);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: default;
+      transform: none;
+    }
+
+    .hint {
+      margin-top: 16px;
+      color: rgba(255, 217, 61, 0.7);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .motivation {
+      margin-top: 14px;
+      margin-bottom: 0;
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 14px;
+      text-align: center;
+      font-style: italic;
+    }
+
+    .error {
+      margin-top: 12px;
+      color: #FF6B6B;
+      font-size: 13px;
+      display: none;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="hero">
+      <h1 id="hero-title">💪 Đến giờ tập rồi!</h1>
+      <p id="hero-subtitle">Nghỉ ngơi một chút, vận động để tăng năng lượng nào!</p>
+    </div>
+
+    <div class="exercises">
+      <div class="row">
+        <span class="row-icon">🫸</span>
+        <div class="label-row">
+          <label for="pushups">Chống đẩy</label>
+          <span class="today-stat" id="stat-pushups">Hôm nay 0</span>
+        </div>
+        <input id="pushups" inputmode="numeric" autocomplete="off" value="0" />
+      </div>
+
+      <div class="row">
+        <span class="row-icon">🦵</span>
+        <div class="label-row">
+          <label for="situps">Gập bụng</label>
+          <span class="today-stat" id="stat-situps">Hôm nay 0</span>
+        </div>
+        <input id="situps" inputmode="numeric" autocomplete="off" value="0" />
+      </div>
+
+      <div class="row">
+        <span class="row-icon">🍑</span>
+        <div class="label-row">
+          <label for="squats">Squat</label>
+          <span class="today-stat" id="stat-squats">Hôm nay 0</span>
+        </div>
+        <input id="squats" inputmode="numeric" autocomplete="off" value="0" />
+      </div>
+    </div>
+
+    <div class="actions">
+      <button id="submit">🔥 Xong · Mở khóa!</button>
+      <p class="motivation" id="motivation"></p>
+    </div>
+
+    <div id="error" class="error"></div>
+  </div>
+
+  <script src="exercise_gate.js" type="module"></script>
+</body>
+</html>

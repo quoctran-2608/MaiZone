@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MaiZone - Hỏi lý do trước khi mở trang gây sao nhãng</title>
+  <style>
+    :root {
+      --mai-pink: #ff8fab;
+      --mai-pink-weak: #ffb7c5;
+      --mai-text: #333333;
+      --mai-subtext: #666666;
+      --mai-bg: #ffffff;
+      --mai-card: #ffffff;
+      --mai-border: rgba(0, 0, 0, 0.08);
+      --mai-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--mai-bg);
+      color: var(--mai-text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 22px;
+      line-height: 1.25;
+    }
+
+    .container {
+      max-width: 460px;
+      width: 100%;
+      background: var(--mai-card);
+      border-radius: 18px;
+      padding: 22px 22px 20px;
+      border: 1px solid var(--mai-border);
+      box-shadow: var(--mai-shadow);
+      text-align: center;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: rgba(255, 143, 171, 0.14);
+      color: var(--mai-pink);
+      font-size: 20px;
+      flex: 0 0 auto;
+    }
+
+    h1 {
+      font-size: 18px;
+      margin: 0;
+      color: var(--mai-text);
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: var(--mai-subtext);
+      margin-bottom: 16px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 110px;
+      border: 1px solid var(--mai-border);
+      border-radius: 12px;
+      padding: 12px 12px;
+      font-size: 14px;
+      font-family: inherit;
+      resize: none;
+      background: #fff9fb;
+      color: var(--mai-text);
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    textarea:focus {
+      border-color: var(--mai-pink);
+      box-shadow: 0 0 0 3px rgba(255, 143, 171, 0.18);
+    }
+
+    textarea::placeholder {
+      color: #999999;
+    }
+
+    .counter {
+      text-align: right;
+      font-size: 12px;
+      color: var(--mai-subtext);
+      margin-top: 8px;
+      margin-bottom: 14px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .counter.valid {
+      color: #2e7d32;
+      font-weight: 600;
+    }
+
+    .button {
+      width: 100%;
+      appearance: none;
+      border: none;
+      border-radius: 999px;
+      padding: 11px 14px;
+      background: var(--mai-pink);
+      color: white;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.06s ease, background-color 0.2s ease;
+    }
+
+    .button:hover {
+      background: var(--mai-pink-weak);
+    }
+
+    .button:active {
+      transform: translateY(1px);
+    }
+
+    .button:disabled {
+      background: #f3c5d3;
+      cursor: not-allowed;
+    }
+
+    .rules {
+      margin-top: 16px;
+      padding: 12px 14px;
+      background: rgba(255, 143, 171, 0.08);
+      border-radius: 12px;
+      text-align: left;
+      font-size: 12px;
+      color: var(--mai-subtext);
+    }
+
+    .rules-title {
+      font-weight: 700;
+      color: var(--mai-text);
+      margin-bottom: 6px;
+      font-size: 12px;
+    }
+
+    .rules-list {
+      list-style: none;
+      padding-left: 14px;
+    }
+
+    .rules-list li {
+      position: relative;
+      padding: 4px 0;
+    }
+
+    .rules-list li::before {
+      content: "•";
+      position: absolute;
+      left: -12px;
+      color: var(--mai-pink);
+    }
+
+    .warning {
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--mai-subtext);
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--mai-border);
+      margin: 16px 0;
+    }
+
+    .history {
+      text-align: left;
+    }
+
+    .history-toggle {
+      background: none;
+      border: none;
+      color: var(--mai-pink);
+      font-size: 13px;
+      cursor: pointer;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 700;
+    }
+
+    .history-toggle .arrow {
+      font-size: 12px;
+      transition: transform 0.2s ease;
+    }
+
+    .history-toggle.open .arrow {
+      transform: rotate(90deg);
+    }
+
+    .history-list {
+      display: none;
+      margin-top: 12px;
+      max-height: 220px;
+      overflow-y: auto;
+    }
+
+    .history-list.visible {
+      display: block;
+    }
+
+    .history-item {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--mai-border);
+    }
+
+    .history-item:last-child {
+      border-bottom: none;
+    }
+
+    .history-reason {
+      color: var(--mai-text);
+      font-size: 13px;
+      line-height: 1.4;
+      word-break: break-word;
+    }
+
+    .history-time {
+      color: var(--mai-subtext);
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    .history-empty {
+      color: var(--mai-subtext);
+      font-size: 12px;
+      padding: 8px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="badge">🌸</div>
+      <h1>hỏi nhỏ một câu</h1>
+    </div>
+    <p class="subtitle">Bạn mở trang web gây sao nhãng để làm gì?</p>
+
+    <textarea id="reason" placeholder="Ghi ngắn gọn (ít nhất 5 ký tự)..." autofocus></textarea>
+    <div class="counter" id="counter">0 / 5 ký tự</div>
+
+    <button id="submit" class="button" disabled>Cho phép dùng trong 5 phút</button>
+
+    <div class="rules">
+      <div class="rules-title">Quy tắc nhỏ</div>
+      <ul class="rules-list">
+        <li>Chỉ mở trong <strong>5 phút</strong></li>
+        <li>Chỉ áp dụng cho <strong>tab này</strong></li>
+        <li>Tab mới cần lý do mới</li>
+      </ul>
+    </div>
+
+    <p class="warning">Mai chỉ lưu lý do trên máy bạn, không gửi đi đâu cả.</p>
+
+    <div class="divider"></div>
+
+    <div class="history">
+      <button class="history-toggle" id="historyToggle">
+        <span class="arrow">▶</span>
+        Xem lại lý do gần đây
+      </button>
+      <div class="history-list" id="historyList"></div>
+    </div>
+  </div>
+
+  <script type="module" src="intent_gate.js"></script>
+</body>
+</html>
